@@ -1,0 +1,1761 @@
+Terminals unused in grammar
+
+   BITWISE_OR
+   BITWISE_AND
+   LEFTSHIFT
+   RIGHTSHIFT
+   BITWISE_NOT
+   COMMA
+   DOT
+   COLON
+   BACKSLASH
+   SQ
+   DQ
+   ERROR
+   STRING_CONSTANT
+
+
+Grammar
+
+    0 $accept: s $end
+
+    1 s: stm_list
+
+    2 stm_list: stm stm_list
+    3         | %empty
+
+    4 stm: simple_stm SEMI
+    5    | FLP stm_list FRP
+
+    6 $@1: %empty
+
+    7 $@2: %empty
+
+    8 stm: WHILE $@1 LP rexpr $@2 RP stm
+
+    9 $@3: %empty
+
+   10 $@4: %empty
+
+   11 $@5: %empty
+
+   12 $@6: %empty
+
+   13 $@7: %empty
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 stm
+
+   15 $@8: %empty
+
+   16 stm: IF LP rexpr RP $@8 stm
+
+   17 $@9: %empty
+
+   18 $@10: %empty
+
+   19 stm: IFE LP rexpr $@9 RP stm $@10 ELSE stm
+
+   20 simple_stm: ID ASSIGN rexpr
+   21           | ID SLP rexpr SRP ASSIGN rexpr
+   22           | DATATYPE ID
+   23           | DATATYPE ID ASSIGN rexpr
+   24           | DATATYPE ID SLP NUM SRP
+   25           | factor1
+   26           | %empty
+
+   27 rexpr: rexpr OR srexpr
+   28      | rexpr AND srexpr
+   29      | srexpr
+
+   30 srexpr: srexpr EQUAL expr
+   31       | srexpr UNEQUAL expr
+   32       | srexpr LT expr
+   33       | srexpr GT expr
+   34       | srexpr LTE expr
+   35       | srexpr GTE expr
+   36       | expr
+
+   37 expr: expr PLUS term
+   38     | expr MINUS term
+   39     | term
+
+   40 term: term STAR factor
+   41     | term DIV factor
+   42     | term MOD factor
+   43     | factor
+
+   44 factor: NUM
+   45       | FNUM
+   46       | LP rexpr RP
+   47       | temp_id
+   48       | MINUS NUM
+   49       | MINUS FNUM
+   50       | MINUS temp_id
+   51       | factor1
+   52       | DCR NUM
+   53       | INC NUM
+   54       | NUM DCR
+   55       | NUM INC
+   56       | NOT factor
+   57       | CHAR_CONSTANT
+
+   58 factor1: DCR ID
+   59        | INC ID
+   60        | ID DCR
+   61        | ID INC
+
+   62 temp_id: ID
+   63        | ID SLP rexpr SRP
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+PLUS (258) 37
+MINUS (259) 38 48 49 50
+STAR (260) 40
+DIV (261) 41
+MOD (262) 42
+INC (263) 53 55 59 61
+DCR (264) 52 54 58 60
+UNEQUAL (265) 31
+NOT (266) 56
+LT (267) 32
+GT (268) 33
+EQUAL (269) 30
+LTE (270) 34
+GTE (271) 35
+ASSIGN (272) 20 21 23
+BITWISE_OR (273)
+BITWISE_AND (274)
+OR (275) 27
+AND (276) 28
+LEFTSHIFT (277)
+RIGHTSHIFT (278)
+BITWISE_NOT (279)
+LP (280) 8 14 16 19 46
+RP (281) 8 14 16 19 46
+SLP (282) 21 24 63
+SRP (283) 21 24 63
+FLP (284) 5
+FRP (285) 5
+COMMA (286)
+SEMI (287) 4 14
+DOT (288)
+COLON (289)
+BACKSLASH (290)
+SQ (291)
+DQ (292)
+ELSE (293) 19
+ERROR (294)
+STRING_CONSTANT (295)
+NUM (296) 24 44 48 52 53 54 55
+FNUM (297) 45 49
+ID (298) 20 21 22 23 24 58 59 60 61 62 63
+CHAR_CONSTANT (299) 57
+DATATYPE (300) 22 23 24
+FOR (301) 14
+WHILE (302) 8
+IF (303) 16
+IFE (304) 19
+
+
+Nonterminals, with rules where they appear
+
+$accept (50)
+    on left: 0
+s (51)
+    on left: 1, on right: 0
+stm_list (52)
+    on left: 2 3, on right: 1 2 5
+stm (53)
+    on left: 4 5 8 14 16 19, on right: 2 8 14 16 19
+$@1 (54)
+    on left: 6, on right: 8
+$@2 (55)
+    on left: 7, on right: 8
+$@3 (56)
+    on left: 9, on right: 14
+$@4 (57)
+    on left: 10, on right: 14
+$@5 (58)
+    on left: 11, on right: 14
+$@6 (59)
+    on left: 12, on right: 14
+$@7 (60)
+    on left: 13, on right: 14
+$@8 (61)
+    on left: 15, on right: 16
+$@9 (62)
+    on left: 17, on right: 19
+$@10 (63)
+    on left: 18, on right: 19
+simple_stm (64)
+    on left: 20 21 22 23 24 25 26, on right: 4 14
+rexpr (65)
+    on left: 27 28 29, on right: 8 14 16 19 20 21 23 27 28 46 63
+srexpr (66)
+    on left: 30 31 32 33 34 35 36, on right: 27 28 29 30 31 32 33 34
+    35
+expr (67)
+    on left: 37 38 39, on right: 30 31 32 33 34 35 36 37 38
+term (68)
+    on left: 40 41 42 43, on right: 37 38 39 40 41 42
+factor (69)
+    on left: 44 45 46 47 48 49 50 51 52 53 54 55 56 57, on right: 40
+    41 42 43 56
+factor1 (70)
+    on left: 58 59 60 61, on right: 25 51
+temp_id (71)
+    on left: 62 63, on right: 47 50
+
+
+State 0
+
+    0 $accept: . s $end
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    SEMI      reduce using rule 26 (simple_stm)
+    $default  reduce using rule 3 (stm_list)
+
+    s           go to state 10
+    stm_list    go to state 11
+    stm         go to state 12
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 1
+
+   59 factor1: INC . ID
+
+    ID  shift, and go to state 15
+
+
+State 2
+
+   58 factor1: DCR . ID
+
+    ID  shift, and go to state 16
+
+
+State 3
+
+    5 stm: FLP . stm_list FRP
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    SEMI      reduce using rule 26 (simple_stm)
+    $default  reduce using rule 3 (stm_list)
+
+    stm_list    go to state 17
+    stm         go to state 12
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 4
+
+   20 simple_stm: ID . ASSIGN rexpr
+   21           | ID . SLP rexpr SRP ASSIGN rexpr
+   60 factor1: ID . DCR
+   61        | ID . INC
+
+    INC     shift, and go to state 18
+    DCR     shift, and go to state 19
+    ASSIGN  shift, and go to state 20
+    SLP     shift, and go to state 21
+
+
+State 5
+
+   22 simple_stm: DATATYPE . ID
+   23           | DATATYPE . ID ASSIGN rexpr
+   24           | DATATYPE . ID SLP NUM SRP
+
+    ID  shift, and go to state 22
+
+
+State 6
+
+   14 stm: FOR . LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 stm
+
+    LP  shift, and go to state 23
+
+
+State 7
+
+    8 stm: WHILE . $@1 LP rexpr $@2 RP stm
+
+    $default  reduce using rule 6 ($@1)
+
+    $@1  go to state 24
+
+
+State 8
+
+   16 stm: IF . LP rexpr RP $@8 stm
+
+    LP  shift, and go to state 25
+
+
+State 9
+
+   19 stm: IFE . LP rexpr $@9 RP stm $@10 ELSE stm
+
+    LP  shift, and go to state 26
+
+
+State 10
+
+    0 $accept: s . $end
+
+    $end  shift, and go to state 27
+
+
+State 11
+
+    1 s: stm_list .
+
+    $default  reduce using rule 1 (s)
+
+
+State 12
+
+    2 stm_list: stm . stm_list
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    SEMI      reduce using rule 26 (simple_stm)
+    $default  reduce using rule 3 (stm_list)
+
+    stm_list    go to state 28
+    stm         go to state 12
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 13
+
+    4 stm: simple_stm . SEMI
+
+    SEMI  shift, and go to state 29
+
+
+State 14
+
+   25 simple_stm: factor1 .
+
+    $default  reduce using rule 25 (simple_stm)
+
+
+State 15
+
+   59 factor1: INC ID .
+
+    $default  reduce using rule 59 (factor1)
+
+
+State 16
+
+   58 factor1: DCR ID .
+
+    $default  reduce using rule 58 (factor1)
+
+
+State 17
+
+    5 stm: FLP stm_list . FRP
+
+    FRP  shift, and go to state 30
+
+
+State 18
+
+   61 factor1: ID INC .
+
+    $default  reduce using rule 61 (factor1)
+
+
+State 19
+
+   60 factor1: ID DCR .
+
+    $default  reduce using rule 60 (factor1)
+
+
+State 20
+
+   20 simple_stm: ID ASSIGN . rexpr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 40
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 21
+
+   21 simple_stm: ID SLP . rexpr SRP ASSIGN rexpr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 47
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 22
+
+   22 simple_stm: DATATYPE ID .
+   23           | DATATYPE ID . ASSIGN rexpr
+   24           | DATATYPE ID . SLP NUM SRP
+
+    ASSIGN  shift, and go to state 48
+    SLP     shift, and go to state 49
+
+    $default  reduce using rule 22 (simple_stm)
+
+
+State 23
+
+   14 stm: FOR LP . simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 stm
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+
+    $default  reduce using rule 26 (simple_stm)
+
+    simple_stm  go to state 50
+    factor1     go to state 14
+
+
+State 24
+
+    8 stm: WHILE $@1 . LP rexpr $@2 RP stm
+
+    LP  shift, and go to state 51
+
+
+State 25
+
+   16 stm: IF LP . rexpr RP $@8 stm
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 52
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 26
+
+   19 stm: IFE LP . rexpr $@9 RP stm $@10 ELSE stm
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 53
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 27
+
+    0 $accept: s $end .
+
+    $default  accept
+
+
+State 28
+
+    2 stm_list: stm stm_list .
+
+    $default  reduce using rule 2 (stm_list)
+
+
+State 29
+
+    4 stm: simple_stm SEMI .
+
+    $default  reduce using rule 4 (stm)
+
+
+State 30
+
+    5 stm: FLP stm_list FRP .
+
+    $default  reduce using rule 5 (stm)
+
+
+State 31
+
+   48 factor: MINUS . NUM
+   49       | MINUS . FNUM
+   50       | MINUS . temp_id
+
+    NUM   shift, and go to state 54
+    FNUM  shift, and go to state 55
+    ID    shift, and go to state 56
+
+    temp_id  go to state 57
+
+
+State 32
+
+   53 factor: INC . NUM
+   59 factor1: INC . ID
+
+    NUM  shift, and go to state 58
+    ID   shift, and go to state 15
+
+
+State 33
+
+   52 factor: DCR . NUM
+   58 factor1: DCR . ID
+
+    NUM  shift, and go to state 59
+    ID   shift, and go to state 16
+
+
+State 34
+
+   56 factor: NOT . factor
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    factor   go to state 60
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 35
+
+   46 factor: LP . rexpr RP
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 61
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 36
+
+   44 factor: NUM .
+   54       | NUM . DCR
+   55       | NUM . INC
+
+    INC  shift, and go to state 62
+    DCR  shift, and go to state 63
+
+    $default  reduce using rule 44 (factor)
+
+
+State 37
+
+   45 factor: FNUM .
+
+    $default  reduce using rule 45 (factor)
+
+
+State 38
+
+   60 factor1: ID . DCR
+   61        | ID . INC
+   62 temp_id: ID .
+   63        | ID . SLP rexpr SRP
+
+    INC  shift, and go to state 18
+    DCR  shift, and go to state 19
+    SLP  shift, and go to state 64
+
+    $default  reduce using rule 62 (temp_id)
+
+
+State 39
+
+   57 factor: CHAR_CONSTANT .
+
+    $default  reduce using rule 57 (factor)
+
+
+State 40
+
+   20 simple_stm: ID ASSIGN rexpr .
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+
+    $default  reduce using rule 20 (simple_stm)
+
+
+State 41
+
+   29 rexpr: srexpr .
+   30 srexpr: srexpr . EQUAL expr
+   31       | srexpr . UNEQUAL expr
+   32       | srexpr . LT expr
+   33       | srexpr . GT expr
+   34       | srexpr . LTE expr
+   35       | srexpr . GTE expr
+
+    UNEQUAL  shift, and go to state 67
+    LT       shift, and go to state 68
+    GT       shift, and go to state 69
+    EQUAL    shift, and go to state 70
+    LTE      shift, and go to state 71
+    GTE      shift, and go to state 72
+
+    $default  reduce using rule 29 (rexpr)
+
+
+State 42
+
+   36 srexpr: expr .
+   37 expr: expr . PLUS term
+   38     | expr . MINUS term
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 36 (srexpr)
+
+
+State 43
+
+   39 expr: term .
+   40 term: term . STAR factor
+   41     | term . DIV factor
+   42     | term . MOD factor
+
+    STAR  shift, and go to state 75
+    DIV   shift, and go to state 76
+    MOD   shift, and go to state 77
+
+    $default  reduce using rule 39 (expr)
+
+
+State 44
+
+   43 term: factor .
+
+    $default  reduce using rule 43 (term)
+
+
+State 45
+
+   51 factor: factor1 .
+
+    $default  reduce using rule 51 (factor)
+
+
+State 46
+
+   47 factor: temp_id .
+
+    $default  reduce using rule 47 (factor)
+
+
+State 47
+
+   21 simple_stm: ID SLP rexpr . SRP ASSIGN rexpr
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+    SRP  shift, and go to state 78
+
+
+State 48
+
+   23 simple_stm: DATATYPE ID ASSIGN . rexpr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 79
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 49
+
+   24 simple_stm: DATATYPE ID SLP . NUM SRP
+
+    NUM  shift, and go to state 80
+
+
+State 50
+
+   14 stm: FOR LP simple_stm . $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 stm
+
+    $default  reduce using rule 9 ($@3)
+
+    $@3  go to state 81
+
+
+State 51
+
+    8 stm: WHILE $@1 LP . rexpr $@2 RP stm
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 82
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 52
+
+   16 stm: IF LP rexpr . RP $@8 stm
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+    RP   shift, and go to state 83
+
+
+State 53
+
+   19 stm: IFE LP rexpr . $@9 RP stm $@10 ELSE stm
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+
+    $default  reduce using rule 17 ($@9)
+
+    $@9  go to state 84
+
+
+State 54
+
+   48 factor: MINUS NUM .
+
+    $default  reduce using rule 48 (factor)
+
+
+State 55
+
+   49 factor: MINUS FNUM .
+
+    $default  reduce using rule 49 (factor)
+
+
+State 56
+
+   62 temp_id: ID .
+   63        | ID . SLP rexpr SRP
+
+    SLP  shift, and go to state 64
+
+    $default  reduce using rule 62 (temp_id)
+
+
+State 57
+
+   50 factor: MINUS temp_id .
+
+    $default  reduce using rule 50 (factor)
+
+
+State 58
+
+   53 factor: INC NUM .
+
+    $default  reduce using rule 53 (factor)
+
+
+State 59
+
+   52 factor: DCR NUM .
+
+    $default  reduce using rule 52 (factor)
+
+
+State 60
+
+   56 factor: NOT factor .
+
+    $default  reduce using rule 56 (factor)
+
+
+State 61
+
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+   46 factor: LP rexpr . RP
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+    RP   shift, and go to state 85
+
+
+State 62
+
+   55 factor: NUM INC .
+
+    $default  reduce using rule 55 (factor)
+
+
+State 63
+
+   54 factor: NUM DCR .
+
+    $default  reduce using rule 54 (factor)
+
+
+State 64
+
+   63 temp_id: ID SLP . rexpr SRP
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 86
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 65
+
+   27 rexpr: rexpr OR . srexpr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    srexpr   go to state 87
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 66
+
+   28 rexpr: rexpr AND . srexpr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    srexpr   go to state 88
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 67
+
+   31 srexpr: srexpr UNEQUAL . expr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    expr     go to state 89
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 68
+
+   32 srexpr: srexpr LT . expr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    expr     go to state 90
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 69
+
+   33 srexpr: srexpr GT . expr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    expr     go to state 91
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 70
+
+   30 srexpr: srexpr EQUAL . expr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    expr     go to state 92
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 71
+
+   34 srexpr: srexpr LTE . expr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    expr     go to state 93
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 72
+
+   35 srexpr: srexpr GTE . expr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    expr     go to state 94
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 73
+
+   37 expr: expr PLUS . term
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    term     go to state 95
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 74
+
+   38 expr: expr MINUS . term
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    term     go to state 96
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 75
+
+   40 term: term STAR . factor
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    factor   go to state 97
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 76
+
+   41 term: term DIV . factor
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    factor   go to state 98
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 77
+
+   42 term: term MOD . factor
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    factor   go to state 99
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 78
+
+   21 simple_stm: ID SLP rexpr SRP . ASSIGN rexpr
+
+    ASSIGN  shift, and go to state 100
+
+
+State 79
+
+   23 simple_stm: DATATYPE ID ASSIGN rexpr .
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+
+    $default  reduce using rule 23 (simple_stm)
+
+
+State 80
+
+   24 simple_stm: DATATYPE ID SLP NUM . SRP
+
+    SRP  shift, and go to state 101
+
+
+State 81
+
+   14 stm: FOR LP simple_stm $@3 . SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 stm
+
+    SEMI  shift, and go to state 102
+
+
+State 82
+
+    8 stm: WHILE $@1 LP rexpr . $@2 RP stm
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+
+    $default  reduce using rule 7 ($@2)
+
+    $@2  go to state 103
+
+
+State 83
+
+   16 stm: IF LP rexpr RP . $@8 stm
+
+    $default  reduce using rule 15 ($@8)
+
+    $@8  go to state 104
+
+
+State 84
+
+   19 stm: IFE LP rexpr $@9 . RP stm $@10 ELSE stm
+
+    RP  shift, and go to state 105
+
+
+State 85
+
+   46 factor: LP rexpr RP .
+
+    $default  reduce using rule 46 (factor)
+
+
+State 86
+
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+   63 temp_id: ID SLP rexpr . SRP
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+    SRP  shift, and go to state 106
+
+
+State 87
+
+   27 rexpr: rexpr OR srexpr .
+   30 srexpr: srexpr . EQUAL expr
+   31       | srexpr . UNEQUAL expr
+   32       | srexpr . LT expr
+   33       | srexpr . GT expr
+   34       | srexpr . LTE expr
+   35       | srexpr . GTE expr
+
+    UNEQUAL  shift, and go to state 67
+    LT       shift, and go to state 68
+    GT       shift, and go to state 69
+    EQUAL    shift, and go to state 70
+    LTE      shift, and go to state 71
+    GTE      shift, and go to state 72
+
+    $default  reduce using rule 27 (rexpr)
+
+
+State 88
+
+   28 rexpr: rexpr AND srexpr .
+   30 srexpr: srexpr . EQUAL expr
+   31       | srexpr . UNEQUAL expr
+   32       | srexpr . LT expr
+   33       | srexpr . GT expr
+   34       | srexpr . LTE expr
+   35       | srexpr . GTE expr
+
+    UNEQUAL  shift, and go to state 67
+    LT       shift, and go to state 68
+    GT       shift, and go to state 69
+    EQUAL    shift, and go to state 70
+    LTE      shift, and go to state 71
+    GTE      shift, and go to state 72
+
+    $default  reduce using rule 28 (rexpr)
+
+
+State 89
+
+   31 srexpr: srexpr UNEQUAL expr .
+   37 expr: expr . PLUS term
+   38     | expr . MINUS term
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 31 (srexpr)
+
+
+State 90
+
+   32 srexpr: srexpr LT expr .
+   37 expr: expr . PLUS term
+   38     | expr . MINUS term
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 32 (srexpr)
+
+
+State 91
+
+   33 srexpr: srexpr GT expr .
+   37 expr: expr . PLUS term
+   38     | expr . MINUS term
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 33 (srexpr)
+
+
+State 92
+
+   30 srexpr: srexpr EQUAL expr .
+   37 expr: expr . PLUS term
+   38     | expr . MINUS term
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 30 (srexpr)
+
+
+State 93
+
+   34 srexpr: srexpr LTE expr .
+   37 expr: expr . PLUS term
+   38     | expr . MINUS term
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 34 (srexpr)
+
+
+State 94
+
+   35 srexpr: srexpr GTE expr .
+   37 expr: expr . PLUS term
+   38     | expr . MINUS term
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 35 (srexpr)
+
+
+State 95
+
+   37 expr: expr PLUS term .
+   40 term: term . STAR factor
+   41     | term . DIV factor
+   42     | term . MOD factor
+
+    STAR  shift, and go to state 75
+    DIV   shift, and go to state 76
+    MOD   shift, and go to state 77
+
+    $default  reduce using rule 37 (expr)
+
+
+State 96
+
+   38 expr: expr MINUS term .
+   40 term: term . STAR factor
+   41     | term . DIV factor
+   42     | term . MOD factor
+
+    STAR  shift, and go to state 75
+    DIV   shift, and go to state 76
+    MOD   shift, and go to state 77
+
+    $default  reduce using rule 38 (expr)
+
+
+State 97
+
+   40 term: term STAR factor .
+
+    $default  reduce using rule 40 (term)
+
+
+State 98
+
+   41 term: term DIV factor .
+
+    $default  reduce using rule 41 (term)
+
+
+State 99
+
+   42 term: term MOD factor .
+
+    $default  reduce using rule 42 (term)
+
+
+State 100
+
+   21 simple_stm: ID SLP rexpr SRP ASSIGN . rexpr
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 107
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 101
+
+   24 simple_stm: DATATYPE ID SLP NUM SRP .
+
+    $default  reduce using rule 24 (simple_stm)
+
+
+State 102
+
+   14 stm: FOR LP simple_stm $@3 SEMI . rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 stm
+
+    MINUS          shift, and go to state 31
+    INC            shift, and go to state 32
+    DCR            shift, and go to state 33
+    NOT            shift, and go to state 34
+    LP             shift, and go to state 35
+    NUM            shift, and go to state 36
+    FNUM           shift, and go to state 37
+    ID             shift, and go to state 38
+    CHAR_CONSTANT  shift, and go to state 39
+
+    rexpr    go to state 108
+    srexpr   go to state 41
+    expr     go to state 42
+    term     go to state 43
+    factor   go to state 44
+    factor1  go to state 45
+    temp_id  go to state 46
+
+
+State 103
+
+    8 stm: WHILE $@1 LP rexpr $@2 . RP stm
+
+    RP  shift, and go to state 109
+
+
+State 104
+
+   16 stm: IF LP rexpr RP $@8 . stm
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    $default  reduce using rule 26 (simple_stm)
+
+    stm         go to state 110
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 105
+
+   19 stm: IFE LP rexpr $@9 RP . stm $@10 ELSE stm
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    $default  reduce using rule 26 (simple_stm)
+
+    stm         go to state 111
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 106
+
+   63 temp_id: ID SLP rexpr SRP .
+
+    $default  reduce using rule 63 (temp_id)
+
+
+State 107
+
+   21 simple_stm: ID SLP rexpr SRP ASSIGN rexpr .
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+
+    $default  reduce using rule 21 (simple_stm)
+
+
+State 108
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr . $@4 SEMI $@5 simple_stm $@6 RP $@7 stm
+   27 rexpr: rexpr . OR srexpr
+   28      | rexpr . AND srexpr
+
+    OR   shift, and go to state 65
+    AND  shift, and go to state 66
+
+    $default  reduce using rule 10 ($@4)
+
+    $@4  go to state 112
+
+
+State 109
+
+    8 stm: WHILE $@1 LP rexpr $@2 RP . stm
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    $default  reduce using rule 26 (simple_stm)
+
+    stm         go to state 113
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 110
+
+   16 stm: IF LP rexpr RP $@8 stm .
+
+    $default  reduce using rule 16 (stm)
+
+
+State 111
+
+   19 stm: IFE LP rexpr $@9 RP stm . $@10 ELSE stm
+
+    $default  reduce using rule 18 ($@10)
+
+    $@10  go to state 114
+
+
+State 112
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 . SEMI $@5 simple_stm $@6 RP $@7 stm
+
+    SEMI  shift, and go to state 115
+
+
+State 113
+
+    8 stm: WHILE $@1 LP rexpr $@2 RP stm .
+
+    $default  reduce using rule 8 (stm)
+
+
+State 114
+
+   19 stm: IFE LP rexpr $@9 RP stm $@10 . ELSE stm
+
+    ELSE  shift, and go to state 116
+
+
+State 115
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI . $@5 simple_stm $@6 RP $@7 stm
+
+    $default  reduce using rule 11 ($@5)
+
+    $@5  go to state 117
+
+
+State 116
+
+   19 stm: IFE LP rexpr $@9 RP stm $@10 ELSE . stm
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    $default  reduce using rule 26 (simple_stm)
+
+    stm         go to state 118
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 117
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 . simple_stm $@6 RP $@7 stm
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+
+    $default  reduce using rule 26 (simple_stm)
+
+    simple_stm  go to state 119
+    factor1     go to state 14
+
+
+State 118
+
+   19 stm: IFE LP rexpr $@9 RP stm $@10 ELSE stm .
+
+    $default  reduce using rule 19 (stm)
+
+
+State 119
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm . $@6 RP $@7 stm
+
+    $default  reduce using rule 12 ($@6)
+
+    $@6  go to state 120
+
+
+State 120
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 . RP $@7 stm
+
+    RP  shift, and go to state 121
+
+
+State 121
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP . $@7 stm
+
+    $default  reduce using rule 13 ($@7)
+
+    $@7  go to state 122
+
+
+State 122
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 . stm
+
+    INC       shift, and go to state 1
+    DCR       shift, and go to state 2
+    FLP       shift, and go to state 3
+    ID        shift, and go to state 4
+    DATATYPE  shift, and go to state 5
+    FOR       shift, and go to state 6
+    WHILE     shift, and go to state 7
+    IF        shift, and go to state 8
+    IFE       shift, and go to state 9
+
+    $default  reduce using rule 26 (simple_stm)
+
+    stm         go to state 123
+    simple_stm  go to state 13
+    factor1     go to state 14
+
+
+State 123
+
+   14 stm: FOR LP simple_stm $@3 SEMI rexpr $@4 SEMI $@5 simple_stm $@6 RP $@7 stm .
+
+    $default  reduce using rule 14 (stm)
